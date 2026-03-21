@@ -1,0 +1,209 @@
+1. Introduction
+Dans le cadre de ce stage et du module académique associé, il a été demandé de réaliser une application mobile permettant de recueillir l’avis des passagers de l’aéroport à travers un questionnaire simple et rapide. L’objectif principal du projet était de proposer une solution plus ergonomique qu’une fiche papier classique, tout en gardant les éléments les plus importants de l’évaluation.
+
+Le projet a été développé avec Flutter, un framework qui permet de créer des applications mobiles modernes à partir d’une seule base de code. Cette technologie a été choisie car elle facilite la création d’interfaces graphiques cohérentes, interactives et adaptées à un usage mobile.
+
+2. Contexte du projet
+Dans un environnement aéroportuaire, les passagers disposent généralement de peu de temps et peuvent être réticents à remplir un questionnaire trop long. Il a donc été nécessaire de concevoir une application capable de recueillir des informations pertinentes sans multiplier les questions.
+
+Au lieu de reproduire toutes les fiches de sondage existantes de manière complète, l’application a été pensée comme une version condensée, plus adaptée au smartphone et à l’expérience utilisateur mobile.
+
+3. Problématique
+La problématique du projet peut être formulée ainsi : comment proposer une application mobile de sondage qui soit à la fois simple pour l’utilisateur, cohérente avec les besoins du stage et suffisamment sérieuse sur le plan technique pour constituer un bon travail académique.
+
+Il fallait donc trouver un équilibre entre simplicité d’usage, qualité visuelle, logique fonctionnelle et faisabilité technique pour une première application Flutter.
+
+4. Objectifs du projet
+Les objectifs principaux du projet sont les suivants :
+
+développer une application mobile Flutter fonctionnelle ;
+
+proposer une interface claire et moderne ;
+
+limiter le nombre de questions pour ne pas gêner le passager ;
+
+utiliser un système de notation rapide par étoiles ;
+
+offrir un champ de commentaire final optionnel ;
+
+sauvegarder localement le brouillon du formulaire ;
+
+produire un résultat présentable dans un cadre de stage et de module universitaire.
+
+5. Choix fonctionnels
+Afin d’alléger l’expérience utilisateur, le questionnaire final a été réduit à cinq catégories principales :
+
+Confort
+
+Information et orientation
+
+Propreté générale
+
+Signalisation
+
+Services et commerces
+
+Ce choix permet de garder une vue globale de l’expérience du passager sans imposer une saisie trop longue. Le système de notation de 1 à 3 étoiles permet de transformer une évaluation classique en une interaction plus rapide et plus intuitive sur mobile.
+
+6. Choix techniques
+Le projet a été développé avec Flutter dans un seul fichier main.dart afin de simplifier le développement et la compréhension du code. Ce choix est cohérent pour une application de petite taille, à condition d’organiser correctement le contenu en plusieurs classes.
+
+L’application repose notamment sur plusieurs composants Flutter importants :
+
+MaterialApp pour la structure générale de l’application ;
+
+Scaffold pour la structure visuelle de chaque écran ;
+
+StatefulWidget pour gérer les données qui changent pendant l’utilisation ;
+
+Navigator pour passer d’un écran à un autre ;
+
+TextEditingController pour gérer le commentaire ;
+
+ThemeData pour harmoniser l’apparence visuelle de l’application.
+
+7. Architecture simplifiée de l’application
+Même si tout le code se trouve dans main.dart, l’application est organisée autour de plusieurs classes bien distinctes :
+
+AirportFeedbackApp
+
+HomeScreen
+
+QuickSurveyScreen
+
+SuccessScreen
+
+RatingCard
+
+StyledCard
+
+StarButton
+
+Cette structure permet de conserver un code plus lisible et plus propre qu’un fichier unique entièrement linéaire.
+
+8. Description du fonctionnement
+L’utilisateur commence par ouvrir l’application et arrive sur un écran d’accueil. Cet écran lui présente brièvement la fonction de l’application et lui propose de commencer le mini sondage.
+
+En cliquant sur le bouton Commencer, l’utilisateur accède au formulaire principal. Il peut alors attribuer une note à chaque catégorie, ajouter un commentaire facultatif et envoyer sa réponse une fois le formulaire complété.
+
+Si le formulaire est incomplet, un message de validation apparaît pour indiquer que toutes les catégories doivent être notées. Si le formulaire est complet, un écran final s’affiche avec un message de remerciement et un résumé des réponses.
+
+9. Interface utilisateur
+Un soin particulier a été apporté à l’aspect visuel de l’application. L’interface finale comprend :
+
+un écran d’accueil clair ;
+
+des cartes arrondies pour chaque catégorie ;
+
+des icônes distinctes selon les rubriques ;
+
+une palette de couleurs cohérente ;
+
+une barre de progression ;
+
+un écran de confirmation plus soigné.
+
+L’objectif de ces choix visuels est d’améliorer la lisibilité, la rapidité d’utilisation et la présentation générale du projet.
+
+10. Sauvegarde locale
+L’une des améliorations importantes apportées à l’application est la sauvegarde locale automatique du brouillon. Cette fonctionnalité est réalisée avec le package shared_preferences, qui permet de stocker localement des données simples comme des chaînes de caractères et des nombres.
+
+Dans ce projet, cette sauvegarde sert à enregistrer :
+
+les notes choisies dans chaque catégorie ;
+
+le commentaire final ;
+
+l’état du formulaire en cours de remplissage.
+
+Ainsi, si l’utilisateur revient sur le formulaire sans avoir encore envoyé sa réponse, ses anciennes données peuvent être restaurées automatiquement. Cette amélioration renforce à la fois l’expérience utilisateur et la qualité technique du projet.
+
+11. Justification de la simplification du questionnaire
+Les fiches papier d’origine contiennent plusieurs rubriques détaillées, mais un tel niveau de détail n’est pas toujours adapté à une utilisation sur smartphone par un passager pressé. Il a donc été décidé de regrouper les critères les plus importants dans un mini questionnaire mobile.
+
+Ce choix peut être justifié dans le rapport comme une décision de conception orientée utilisateur. L’objectif n’était pas de supprimer arbitrairement des informations, mais d’adapter le contenu à un format plus ergonomique et plus réaliste dans un contexte d’utilisation mobile.
+
+12. Difficultés rencontrées
+Plusieurs difficultés ont été rencontrées pendant le développement.
+
+La première difficulté concernait l’environnement de développement. L’ajout du package shared_preferences a fait apparaître un message indiquant que Flutter avait besoin du support des symlinks sous Windows, ce qui a rendu nécessaire l’activation du mode développeur Windows.
+
+Une autre difficulté a été liée aux erreurs de syntaxe causées par le collage incomplet de certaines versions du fichier main.dart. Des erreurs de parenthèses, crochets et accolades ont empêché Flutter de reconnaître correctement les classes du projet.
+
+Une difficulté supplémentaire a concerné la compatibilité entre CardTheme et CardThemeData, qui dépend de la version de Flutter utilisée.
+
+13. Solutions apportées
+Pour résoudre les problèmes techniques rencontrés, plusieurs solutions ont été mises en œuvre :
+
+activation du mode développeur Windows ;
+
+utilisation de flutter clean, flutter pub get et flutter run pour stabiliser le projet ;
+
+correction complète de la structure du fichier main.dart ;
+
+adaptation du thème visuel à la version installée de Flutter ;
+
+amélioration progressive de l’interface jusqu’à obtenir une version plus propre et plus professionnelle.
+
+Ces corrections ont permis d’obtenir une application stable, plus soignée visuellement et plus cohérente pour un projet de stage.
+
+14. Résultats obtenus
+Le résultat final est une application mobile simple, claire et fonctionnelle, qui permet :
+
+de saisir rapidement des notes ;
+
+d’ajouter un commentaire facultatif ;
+
+de visualiser la progression du formulaire ;
+
+d’obtenir une validation avant l’envoi ;
+
+de restaurer automatiquement un brouillon local ;
+
+d’afficher un écran final de confirmation.
+
+Le projet répond donc à un double objectif :
+
+un objectif académique, en mettant en pratique plusieurs notions importantes de Flutter ;
+
+un objectif professionnel, en proposant une application réaliste dans un contexte de collecte d’avis passagers.
+
+15. Apports personnels
+Ce projet a permis de mieux comprendre plusieurs notions essentielles du développement Flutter :
+
+la structure d’une application mobile ;
+
+la navigation entre écrans ;
+
+la gestion de l’état avec StatefulWidget et setState() ;
+
+l’organisation du code avec des widgets réutilisables ;
+
+l’utilisation de packages externes comme shared_preferences ;
+
+l’amélioration visuelle d’une interface avec les thèmes et les composants Material.
+
+Il a également permis de découvrir plusieurs aspects pratiques du développement, notamment la gestion des dépendances, les problèmes d’environnement sous Windows et les tests de fonctionnement d’une application mobile.
+
+16. Perspectives d’amélioration
+Dans une version future, plusieurs améliorations pourraient être ajoutées :
+
+connexion à une base de données ou à un backend ;
+
+enregistrement réel des réponses sur un serveur ;
+
+tableau de bord statistique pour analyser les résultats ;
+
+support multilingue ;
+
+authentification des agents de saisie ;
+
+séparation du projet en plusieurs fichiers pour faciliter la maintenance.
+
+Ces perspectives montrent que le projet actuel peut servir de base à une version plus avancée.
+
+17. Conclusion
+Ce projet a permis de concevoir une application Flutter simple mais complète, adaptée à une collecte de satisfaction rapide sur mobile. Malgré plusieurs difficultés techniques, le résultat final est une application fonctionnelle, visuellement améliorée et enrichie par une sauvegarde locale utile dans un contexte réel d’utilisation.
+
+Le projet peut donc être considéré comme un travail cohérent pour un stage et pour un module universitaire, car il associe une réflexion sur l’expérience utilisateur, une réalisation technique concrète et une amélioration progressive de la qualité visuelle et fonctionnelle de l’application.
+

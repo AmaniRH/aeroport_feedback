@@ -1,0 +1,318 @@
+1. Présentation du guide
+Ce document explique tout ce qu’il faut installer, configurer et vérifier pour exécuter correctement le projet Flutter de sondage de satisfaction passagers. Il a pour objectif d’aider un binôme à préparer l’environnement de travail, lancer l’application et résoudre les problèmes techniques les plus fréquents rencontrés pendant le développement.
+
+2. Outils à installer
+Pour travailler sur ce projet, il faut installer les outils suivants :
+
+Flutter SDK
+
+Visual Studio Code
+
+Extension Flutter pour VS Code
+
+Extension Dart pour VS Code
+
+Android Studio
+
+Android SDK
+
+Un émulateur Android ou un téléphone Android avec le mode débogage USB activé
+
+L’extension Flutter pour VS Code installe aussi l’extension Dart si elle n’est pas déjà présente.
+
+Android Studio reste très utile même si le code est écrit dans VS Code, car il fournit l’Android SDK, les outils de build et l’émulateur.
+
+3. Rôle de chaque outil
+3.1 Flutter SDK
+Flutter SDK est l’outil principal qui permet de créer, compiler et exécuter les applications Flutter. Sans lui, le projet ne peut pas être lancé.
+
+3.2 Visual Studio Code
+VS Code est l’éditeur utilisé pour écrire et modifier le code source. Avec l’extension Flutter, il permet aussi de lancer l’application, voir les erreurs et utiliser le terminal intégré.
+
+3.3 Android Studio
+Android Studio sert surtout à :
+
+installer Android SDK,
+
+créer un émulateur Android,
+
+gérer les plateformes Android,
+
+fournir les outils nécessaires à la compilation de l’application.
+
+3.4 Extension Flutter
+L’extension Flutter facilite le développement dans VS Code, par exemple pour :
+
+lancer des projets Flutter,
+
+détecter les appareils connectés,
+
+accéder à certaines commandes Flutter directement depuis l’éditeur.
+
+3.5 Extension Dart
+Dart est le langage utilisé par Flutter. L’extension Dart permet d’avoir la coloration, l’autocomplétion, les erreurs de syntaxe et l’exécution correcte du projet.
+
+3.6 shared_preferences
+Le projet utilise aussi le package shared_preferences, qui permet de sauvegarder localement les notes et le commentaire du formulaire. Ce package sert à restaurer automatiquement le brouillon si l’utilisateur revient sur l’écran plus tard.
+
+4. Installation de Flutter
+Flutter peut être installé de deux façons principales :
+
+soit avec VS Code,
+
+soit manuellement en téléchargeant le SDK.
+
+Méthode simple avec VS Code
+Ouvrir VS Code.
+
+Ouvrir la palette de commandes avec Ctrl + Shift + P.
+
+Taper Flutter.
+
+Choisir une commande Flutter liée à l’installation ou à la création de projet.
+
+Indiquer le chemin du SDK si nécessaire.
+
+Méthode manuelle
+Télécharger Flutter SDK depuis le site officiel.
+
+Extraire le dossier dans un emplacement fixe.
+
+Ajouter le dossier flutter/bin dans la variable d’environnement PATH.
+
+5. Installation de VS Code et extensions
+Installer Visual Studio Code.
+
+Ouvrir VS Code.
+
+Aller dans l’onglet Extensions.
+
+Rechercher Flutter.
+
+Installer l’extension Flutter.
+
+Vérifier que l’extension Dart est également installée.
+
+6. Installation de Android Studio
+Télécharger Android Studio.
+
+L’installer complètement.
+
+Ouvrir Android Studio.
+
+Vérifier que l’Android SDK est installé.
+
+Créer un émulateur Android si nécessaire.
+
+Android Studio fournit aussi les composants nécessaires à la compilation Android, ce qui est important même si le code est écrit dans VS Code.
+
+7. Vérification de l’environnement avec flutter doctor
+Après l’installation, il faut ouvrir un terminal et taper :
+
+bash
+flutter doctor
+Cette commande permet de vérifier si Flutter, Android Studio, Android SDK et les autres dépendances sont bien installés.
+
+Si flutter doctor affiche une erreur liée aux licences Android, il faut exécuter :
+
+bash
+flutter doctor --android-licenses
+Puis accepter les licences une par une avec y.
+
+8. Pourquoi accepter les licences Android
+Flutter a besoin que les licences Android soient acceptées pour pouvoir utiliser complètement l’Android SDK. Si elles ne sont pas acceptées, la compilation Android peut échouer ou rester incomplète.
+
+9. Comment ouvrir le projet
+Pour ouvrir le projet :
+
+lancer VS Code,
+
+cliquer sur Open Folder,
+
+sélectionner le dossier du projet Flutter,
+
+vérifier que le fichier lib/main.dart est bien présent.
+
+Ensuite, dans le terminal du projet, exécuter :
+
+bash
+flutter pub get
+Cette commande télécharge les dépendances déclarées dans pubspec.yaml, par exemple shared_preferences.
+
+10. Comment lancer l’application
+Pour lancer l’application :
+
+démarrer l’émulateur Android,
+
+vérifier qu’il apparaît bien dans VS Code ou dans Flutter,
+
+ouvrir le terminal du projet,
+
+exécuter :
+
+bash
+flutter run
+Cette commande compile et exécute lib/main.dart sur l’appareil connecté.
+
+11. Commandes importantes à connaître
+flutter doctor
+Cette commande sert à vérifier l’état général de l’environnement Flutter.
+
+flutter pub get
+Cette commande télécharge les dépendances du projet définies dans pubspec.yaml.
+
+flutter clean
+Cette commande supprime certains fichiers générés afin de repartir d’un état plus propre en cas de problème de build.
+
+flutter run
+Cette commande compile et exécute l’application sur un appareil connecté.
+
+flutter doctor --android-licenses
+Cette commande permet d’accepter les licences Android manquantes.
+
+12. Pourquoi activer le mode développeur Windows
+Pendant le projet, un message a indiqué :
+
+Building with plugins requires symlink support. Please enable Developer Mode in your system settings.
+
+Cela signifie que Flutter a besoin du support des symlinks sur Windows lorsqu’on utilise certains plugins. C’est notamment le cas de plugins comme shared_preferences, qui nécessitent une préparation correcte des dépendances locales pendant le build.
+
+13. Qu’est-ce qu’un symlink
+Un symlink est un lien symbolique utilisé par le système pour référencer certains dossiers ou fichiers sans les dupliquer réellement. Flutter s’appuie parfois sur ce mécanisme sur Windows lorsqu’il prépare les plugins utilisés par le projet.
+
+14. Comment activer le mode développeur Windows
+Pour activer rapidement le mode développeur sous Windows, on peut exécuter dans le terminal :
+
+bash
+start ms-settings:developers
+Cette commande ouvre directement la page des paramètres Windows liée au mode développeur.
+
+Ensuite, il faut :
+
+activer Developer Mode,
+
+confirmer l’autorisation si Windows le demande,
+
+fermer puis rouvrir le terminal.
+
+15. Pourquoi c’était nécessaire dans ce projet
+Dans ce projet, l’ajout de shared_preferences a déclenché la nécessité d’activer le mode développeur Windows. Ce n’était pas un problème du code lui-même, mais une contrainte de l’environnement local de développement liée aux plugins Flutter.
+
+16. Problèmes rencontrés et solutions
+Problème 1 : Building with plugins requires symlink support
+Cause : le mode développeur Windows n’était pas activé.
+
+Solution :
+
+taper :
+
+bash
+start ms-settings:developers
+activer Developer Mode,
+
+relancer le terminal,
+
+exécuter :
+
+bash
+flutter clean
+flutter pub get
+flutter run
+Problème 2 : package shared_preferences non pris en compte
+Cause : après avoir ajouté la dépendance dans pubspec.yaml, il fallait mettre à jour les packages du projet.
+
+Solution :
+
+bash
+flutter pub get
+Problème 3 : erreur Can't find ']' to match '['
+Cause : le fichier main.dart collé était incomplet ou coupé.
+
+Solution :
+
+supprimer l’ancien contenu,
+
+recoller une version complète,
+
+sauvegarder,
+
+relancer le projet.
+
+Problème 4 : The method 'RatingCard' isn't defined
+Cause : cette erreur venait en réalité d’une erreur de syntaxe plus haut dans le fichier. Quand Flutter rencontre une accolade ou une parenthèse manquante, il ne reconnaît plus correctement les classes suivantes.
+
+Solution :
+
+corriger d’abord les erreurs de syntaxe principales,
+
+puis relancer le projet.
+
+Problème 5 : CardTheme et CardThemeData
+Cause : selon la version de Flutter, ThemeData.cardTheme attend CardThemeData.
+
+Solution :
+remplacer :
+
+dart
+cardTheme: CardTheme(...)
+par :
+
+dart
+cardTheme: CardThemeData(...)
+Problème 6 : licences Android non acceptées
+Cause : l’Android SDK était présent mais les licences n’étaient pas validées.
+
+Solution :
+
+bash
+flutter doctor --android-licenses
+puis accepter tout avec y.
+
+Problème 7 : les changements ne s’affichent pas correctement
+Cause : après de grandes modifications dans main.dart, un simple hot reload peut ne pas suffire.
+
+Solution :
+
+faire un hot restart,
+
+ou relancer flutter run,
+
+ou faire flutter clean si nécessaire.
+
+17. Ordre conseillé pour préparer l’environnement
+Voici l’ordre recommandé pour le binôme :
+
+Installer Flutter SDK.
+
+Installer VS Code.
+
+Installer l’extension Flutter et Dart.
+
+Installer Android Studio.
+
+Vérifier l’environnement avec flutter doctor.
+
+Accepter les licences Android si nécessaire.
+
+Activer le mode développeur Windows si Flutter le demande.
+
+Ouvrir le projet dans VS Code.
+
+Exécuter flutter pub get.
+
+Lancer l’émulateur Android.
+
+Exécuter flutter run.
+
+18. Conseils pratiques pour le binôme
+Pour éviter les erreurs, il est conseillé de :
+
+toujours vérifier flutter doctor après installation,
+
+ne pas modifier plusieurs choses à la fois,
+
+sauvegarder le fichier avant de relancer,
+
+utiliser flutter clean en cas de doute,
+
+garder une copie fonctionnelle du main.dart avant chaque grande modification.

@@ -1,0 +1,322 @@
+Explication du projet Flutter, code partie par partie
+1. Présentation générale
+Ce projet consiste à développer une application mobile Flutter destinée à recueillir l’avis des passagers de l’aéroport à l’aide d’un mini questionnaire rapide. Le questionnaire a été volontairement simplifié afin d’éviter de mettre le passager mal à l’aise avec un trop grand nombre de questions, tout en conservant les grandes catégories jugées importantes pour l’évaluation du service.
+
+L’application a été réalisée dans un seul fichier main.dart afin de simplifier l’apprentissage, le développement et la compréhension du code. Cette approche reste acceptable pour une petite application Flutter tant que le code est organisé en plusieurs classes clairement séparées.
+
+2. Objectif de l’application
+L’objectif principal de l’application est de permettre à un passager de donner rapidement son avis sur plusieurs aspects de son expérience à l’aéroport. Pour cela, l’application propose cinq catégories principales :
+
+Confort
+
+Information et orientation
+
+Propreté générale
+
+Signalisation
+
+Services et commerces
+
+Le choix de ces cinq catégories permet de synthétiser plusieurs fiches de sondage détaillées dans une version plus adaptée au mobile et plus facile à remplir.
+
+3. Structure générale du fichier main.dart
+Le fichier main.dart contient toute l’application, mais il est découpé en plusieurs classes :
+
+AirportFeedbackApp
+
+HomeScreen
+
+QuickSurveyScreen
+
+SuccessScreen
+
+RatingCard
+
+StyledCard
+
+StarButton
+
+Cette organisation permet de garder un seul fichier tout en séparant logiquement les différentes parties de l’application.
+
+4. La fonction main()
+La fonction main() est le point d’entrée de toute application Flutter. Elle sert à lancer le widget principal de l’application grâce à runApp().
+
+Exemple :
+
+dart
+void main() {
+  runApp(const AirportFeedbackApp());
+}
+Cela signifie que lorsque l’application démarre, Flutter commence par afficher la classe AirportFeedbackApp.
+
+5. La classe AirportFeedbackApp
+Cette classe représente l’application entière. Elle contient MaterialApp, qui sert d’enveloppe générale pour définir :
+
+le titre de l’application,
+
+le thème global,
+
+le premier écran affiché.
+
+Le thème global permet d’unifier l’apparence visuelle de l’application, par exemple les couleurs, les boutons, les cartes et les champs de saisie. Cette approche améliore la cohérence graphique du projet.
+
+6. L’écran d’accueil : HomeScreen
+HomeScreen est la première page affichée à l’utilisateur. Cet écran contient :
+
+le titre de l’application,
+
+une icône liée au transport aérien,
+
+un petit texte d’introduction,
+
+un bouton Commencer.
+
+Le bouton Commencer permet de passer à l’écran suivant grâce à Navigator.push(...). Flutter utilise Navigator pour gérer la navigation entre différents écrans dans les applications simples.
+
+7. La navigation entre écrans
+Dans cette application, la navigation est très simple :
+
+de l’écran d’accueil vers le mini sondage,
+
+du mini sondage vers l’écran de confirmation,
+
+puis retour à l’accueil.
+
+La navigation vers un nouvel écran se fait avec :
+
+dart
+Navigator.push(...)
+Le retour peut se faire avec :
+
+dart
+Navigator.pop(...)
+Et pour revenir directement au premier écran, on utilise :
+
+dart
+Navigator.popUntil(context, (route) => route.isFirst);
+Cette logique est bien adaptée à une petite application de stage.
+
+8. L’écran principal du questionnaire : QuickSurveyScreen
+La classe QuickSurveyScreen est écrite en StatefulWidget, car les données changent pendant l’utilisation. Par exemple :
+
+les notes changent quand l’utilisateur clique sur les étoiles,
+
+le commentaire change quand il tape du texte,
+
+la progression change quand de nouvelles catégories sont remplies.
+
+Avec StatefulWidget, Flutter permet de mettre à jour l’affichage quand l’état change. Cela se fait grâce à setState().
+
+9. Les variables de notes
+Dans _QuickSurveyScreenState, on trouve plusieurs variables de type entier :
+
+comfortRating
+
+informationRating
+
+cleanlinessRating
+
+signageRating
+
+servicesRating
+
+Chaque variable contient une note entre 0 et 3 :
+
+0 = aucune note,
+
+1 = non satisfaisant,
+
+2 = moyennement satisfaisant,
+
+3 = satisfaisant.
+
+Ce choix correspond bien à une évaluation rapide et simple sur mobile.
+
+10. Le commentaire final
+L’utilisateur peut aussi écrire un commentaire grâce à un champ de texte. Pour gérer ce champ, l’application utilise un TextEditingController. Ce contrôleur permet de lire le texte saisi et de suivre ses changements pendant l’utilisation.
+
+Exemple :
+
+dart
+final TextEditingController commentController = TextEditingController();
+11. initState() et dispose()
+initState() est appelé automatiquement quand l’écran est créé. Dans ce projet, il sert à :
+
+charger le brouillon sauvegardé,
+
+commencer à écouter les changements du commentaire.
+
+Exemple :
+
+dart
+@override
+void initState() {
+  super.initState();
+  loadDraft();
+  commentController.addListener(saveDraft);
+}
+dispose() est utilisé pour libérer correctement le TextEditingController quand l’écran disparaît. Cela évite des erreurs et permet une meilleure gestion des ressources.
+
+12. La sauvegarde locale avec shared_preferences
+Le projet utilise le package shared_preferences pour enregistrer localement les notes et le commentaire. Ce package permet de sauvegarder des données simples sous forme clé-valeur sur l’appareil.
+
+Dans l’application, trois fonctions principales sont utilisées :
+
+loadDraft()
+
+saveDraft()
+
+clearDraft()
+
+loadDraft()
+Cette fonction lit les anciennes valeurs enregistrées et les remet dans l’interface lorsque l’utilisateur revient sur le formulaire.
+
+saveDraft()
+Cette fonction sauvegarde automatiquement les notes et le commentaire à chaque changement important. Cela évite de perdre les données si l’utilisateur quitte l’écran avant l’envoi.
+
+clearDraft()
+Cette fonction efface les données sauvegardées quand le formulaire est réinitialisé ou envoyé avec succès.
+
+13. La mise à jour des notes : updateRating()
+Quand l’utilisateur clique sur une étoile, la fonction updateRating() est appelée. Elle sert à :
+
+modifier la note de la catégorie choisie,
+
+rafraîchir l’écran avec setState(),
+
+sauvegarder automatiquement le brouillon.
+
+Cela garantit que l’application reste cohérente et réactive à chaque interaction.
+
+14. La validation du formulaire
+Avant l’envoi, l’application vérifie que toutes les catégories ont été notées. Cette vérification est faite grâce à isFormValid. Si une ou plusieurs notes manquent, l’application affiche un message avec SnackBar.
+
+Cette étape est importante pour éviter qu’un formulaire incomplet soit validé.
+
+15. La barre de progression
+L’application contient une barre de progression qui montre combien de catégories ont été remplies. Cette barre améliore l’expérience utilisateur, car le passager voit immédiatement son niveau d’avancement dans le mini questionnaire.
+
+La progression est calculée à partir du nombre de catégories ayant une note supérieure à 0.
+
+16. Les cartes de catégories : RatingCard
+RatingCard est un widget réutilisable qui représente une catégorie du questionnaire. Chaque carte contient :
+
+une icône,
+
+un titre,
+
+un sous-titre,
+
+trois étoiles,
+
+un texte décrivant la note actuelle.
+
+Cette solution évite la répétition du même code pour les cinq catégories et rend l’application plus propre.
+
+17. Les étoiles : StarButton
+StarButton est un widget utilisé pour afficher une étoile cliquable. Lorsque l’utilisateur appuie sur une étoile, le widget appelle une fonction onTap, ce qui déclenche la mise à jour de la note de la catégorie concernée.
+
+18. L’amélioration visuelle : StyledCard
+StyledCard est utilisé pour rendre l’interface plus élégante. Il ajoute notamment :
+
+des coins arrondis,
+
+une ombre légère,
+
+un style de carte plus moderne.
+
+Ce type d’amélioration est important pour un projet de stage, car il donne une meilleure impression visuelle sans compliquer fortement le code.
+
+19. L’écran final : SuccessScreen
+Après un envoi réussi, l’application ouvre SuccessScreen. Cet écran affiche :
+
+un message de remerciement,
+
+un résumé des notes,
+
+le commentaire final s’il existe,
+
+un bouton de retour à l’accueil.
+
+Le retour à l’accueil se fait avec :
+
+dart
+Navigator.popUntil(context, (route) => route.isFirst);
+Ce choix simplifie le redémarrage d’un nouveau questionnaire.
+
+20. La logique UX du projet
+L’application ne reprend pas toutes les fiches papier mot à mot. À la place, elle propose une version condensée et plus adaptée au smartphone. Cette décision est cohérente avec le besoin du projet, qui est de réduire le nombre de questions pour ne pas gêner le passager.
+
+Ce choix peut être défendu dans un rapport comme une décision de conception orientée expérience utilisateur.
+
+21. Petit scénario de test complet
+Cas de test 1 : restauration du brouillon
+Ouvrir l’application.
+
+Cliquer sur Commencer.
+
+Donner quelques notes, par exemple :
+
+Confort = 3
+
+Information = 1
+
+Signalisation = 2
+
+Écrire un commentaire : test brouillon
+
+Revenir à l’accueil sans cliquer sur Envoyer.
+
+Retourner dans Mini sondage.
+
+Résultat attendu :
+
+les étoiles choisies réapparaissent,
+
+le commentaire réapparaît,
+
+un message peut indiquer que le brouillon a été restauré.
+
+Cas de test 2 : validation
+Ouvrir le mini sondage.
+
+Remplir seulement deux catégories.
+
+Cliquer sur Envoyer.
+
+Résultat attendu :
+
+l’envoi est refusé,
+
+un message demande de noter toutes les catégories.
+
+Cas de test 3 : envoi réussi
+Remplir les cinq catégories.
+
+Ajouter ou non un commentaire.
+
+Cliquer sur Envoyer.
+
+Résultat attendu :
+
+l’écran de confirmation s’affiche,
+
+le résumé des réponses apparaît,
+
+le brouillon local est effacé.
+
+Cas de test 4 : réinitialisation
+Remplir quelques champs.
+
+Cliquer sur l’icône Réinitialiser.
+
+Résultat attendu :
+
+toutes les notes reviennent à zéro,
+
+le commentaire est vidé,
+
+le brouillon local est supprimé.
+
+22. Conclusion
+Ce projet Flutter est une application simple mais complète, adaptée à un contexte de stage et à un niveau débutant. Il permet de mettre en pratique plusieurs notions importantes comme la navigation, la gestion de l’état, les widgets réutilisables, le design d’interface et la sauvegarde locale avec shared_preferences
